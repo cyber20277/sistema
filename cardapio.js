@@ -14,8 +14,6 @@ const DOM = {
     productsGrid: document.getElementById('products-grid'),
     categoriesContainer: document.getElementById('categories-container'),
     categoriesContainer2: document.getElementById('categories-container2'),
-    categoriesContainerMobile: document.getElementById('categories-container-mobile'),
-    categoriesContainer2Mobile: document.getElementById('categories-container2-mobile'),
     searchInput: document.getElementById('search-input'),
     searchClear: document.getElementById('search-clear'),
     cartCount: document.getElementById('cart-count'),
@@ -256,7 +254,7 @@ class CardapioApp {
             
             <div class="product-image">
                 ${produto.imagemURL ? 
-                    `<img src="${produto.imagemURL}" alt="${produto.nome}" onerror="this.parentElement.innerHTML='<div style=\"display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #f8f9fa, #e1e5eb); color: #999999;\"><i class=\"fas fa-image\"></i></div>'">` : 
+                    `<img src="${produto.imagemURL}" alt="${produto.nome}" onerror="this.parentElement.innerHTML='<div style=\"display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #f8f9fa, #e1e5eb); color: #999999;\"><i class=\"fas fa-image\"></i></div>` : 
                     `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #f8f9fa, #e1e5eb); color: #999999;">
                         <i class="fas fa-image"></i>
                     </div>`
@@ -325,75 +323,92 @@ class CardapioApp {
      * RENDERIZA BOTÕES DE TAMANHO (USANDO O MESMO ESTILO DO SPEC-ITEM)
      */
     renderizarTamanhosPorCategoria(categoria) {
-        // Renderiza nos dois containers (desktop e mobile)
-        const containers = [
-            DOM.categoriesContainer2,
-            DOM.categoriesContainer2Mobile
-        ];
+        if (!DOM.categoriesContainer2) {
+            console.log('categories-container2 não encontrado');
+            return;
+        }
+
+        console.log(`Renderizando tamanhos para categoria: ${categoria}`);
+
+        // Limpa o container de tamanhos
+        DOM.categoriesContainer2.innerHTML = '';
+
+        // Extrai tamanhos únicos do campo peso
+        const tamanhos = this.extrairTamanhosDaCategoria(categoria);
         
-        containers.forEach(container => {
-            if (!container) return;
+        console.log(`Tamanhos a serem renderizados:`, tamanhos);
+
+        if (tamanhos.length === 0) {
+            console.log('Nenhum tamanho encontrado no campo peso para esta categoria');
+            return;
+        }
+
+        // Cria botões para cada tamanho único (usando a classe spec-item como base)
+        tamanhos.forEach(tamanho => {
+            const btn = document.createElement('button');
+            btn.className = `size-btn ${state.tamanhoAtivo === tamanho ? 'active' : ''}`;
+            btn.dataset.size = tamanho;
             
-            console.log(`Renderizando tamanhos para categoria: ${categoria} no container`);
+            // Define cor baseada no tamanho
+            let cor = this.getCorParaTamanho(tamanho);
             
-            // Limpa o container de tamanhos
-            container.innerHTML = '';
+            btn.innerHTML = `
+                <i class="fas fa-weight-hanging"></i>
+                <span>${tamanho}</span>
+            `;
             
-            // Extrai tamanhos únicos do campo peso
-            const tamanhos = this.extrairTamanhosDaCategoria(categoria);
-            
-            console.log(`Tamanhos a serem renderizados:`, tamanhos);
-            
-            if (tamanhos.length === 0) {
-                console.log('Nenhum tamanho encontrado no campo peso para esta categoria');
-                return;
-            }
-            
-            // Cria botões para cada tamanho único
-            tamanhos.forEach(tamanho => {
-                const btn = document.createElement('button');
-                btn.className = `size-btn ${state.tamanhoAtivo === tamanho ? 'active' : ''}`;
-                btn.dataset.size = tamanho;
-                
-                btn.innerHTML = `
-                    <i class="fas fa-weight-hanging"></i>
-                    <span>${tamanho}</span>
-                `;
-                
-                btn.addEventListener('click', () => {
-                    // Se clicou no mesmo tamanho, desativa o filtro
-                    if (state.tamanhoAtivo === tamanho) {
-                        state.tamanhoAtivo = null;
-                    } else {
-                        state.tamanhoAtivo = tamanho;
-                    }
-                    this.filtrarPorCategoriaComTamanho(categoria, state.tamanhoAtivo);
-                    this.renderizarTamanhosPorCategoria(categoria); // Re-renderiza para atualizar o active
-                });
-                
-                container.appendChild(btn);
+            btn.addEventListener('click', () => {
+                // Se clicou no mesmo tamanho, desativa o filtro
+                if (state.tamanhoAtivo === tamanho) {
+                    state.tamanhoAtivo = null;
+                } else {
+                    state.tamanhoAtivo = tamanho;
+                }
+                this.filtrarPorCategoriaComTamanho(categoria, state.tamanhoAtivo);
+                this.renderizarTamanhosPorCategoria(categoria); // Re-renderiza para atualizar o active
             });
+            
+            DOM.categoriesContainer2.appendChild(btn);
         });
+    }
+
+    /**
+     * DEFINE CORES DIFERENTES PARA CADA TAMANHO
+     */
+    getCorParaTamanho(tamanho) {
+        const tamanhoLower = tamanho.toLowerCase();
+        
+        if (tamanhoLower.includes('pp') || tamanhoLower.includes('extra pequeno')) {
+            return 'var(--cor-pp)';
+        }
+        if (tamanhoLower.includes('p') || tamanhoLower.includes('pequeno')) {
+            return 'var(--cor-p)';
+        }
+        if (tamanhoLower.includes('m') || tamanhoLower.includes('médio') || tamanhoLower.includes('medio')) {
+            return 'var(--cor-m)';
+        }
+        if (tamanhoLower.includes('g') || tamanhoLower.includes('grande')) {
+            return 'var(--cor-g)';
+        }
+        if (tamanhoLower.includes('gg') || tamanhoLower.includes('extra grande')) {
+            return 'var(--cor-gg)';
+        }
+        if (tamanhoLower.includes('único') || tamanhoLower.includes('unico')) {
+            return 'var(--cor-unico)';
+        }
+        
+        return 'var(--cor-padrao)';
     }
 
     filtrarPorCategoria(categoria) {
         // Reseta o tamanho ativo ao mudar de categoria
         state.tamanhoAtivo = null;
         
-        // Atualiza botões em ambos os containers
-        const containers = [
-            DOM.categoriesContainer,
-            DOM.categoriesContainerMobile
-        ];
-        
-        containers.forEach(container => {
-            if (!container) return;
-            container.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.category === categoria) {
-                    btn.classList.add('active');
-                }
-            });
+        DOM.categoriesContainer?.querySelectorAll('.category-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.category === categoria) {
+                btn.classList.add('active');
+            }
         });
 
         state.categoriaAtiva = categoria;
@@ -508,31 +523,23 @@ class CardapioApp {
     }
 
     renderizarCategorias() {
-        // Renderiza em ambos os containers (desktop e mobile)
-        const containers = [
-            DOM.categoriesContainer,
-            DOM.categoriesContainerMobile
-        ];
-        
-        containers.forEach(container => {
-            if (!container) return;
-            
-            container.innerHTML = '';
+        if (!DOM.categoriesContainer) return;
 
-            Array.from(state.categorias).forEach(categoria => {
-                const btn = document.createElement('button');
-                btn.className = 'category-btn';
-                btn.dataset.category = categoria;
-                
-                const icon = this.getIconForCategory(categoria);
-                
-                btn.innerHTML = `
-                    <i class="fas ${icon}"></i>
-                    <span>${this.formatarCategoria(categoria)}</span>
-                `;
-                btn.addEventListener('click', () => this.filtrarPorCategoria(categoria));
-                container.appendChild(btn);
-            });
+        DOM.categoriesContainer.innerHTML = '';
+
+        Array.from(state.categorias).forEach(categoria => {
+            const btn = document.createElement('button');
+            btn.className = 'category-btn';
+            btn.dataset.category = categoria;
+            
+            const icon = this.getIconForCategory(categoria);
+            
+            btn.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${this.formatarCategoria(categoria)}</span>
+            `;
+            btn.addEventListener('click', () => this.filtrarPorCategoria(categoria));
+            DOM.categoriesContainer.appendChild(btn);
         });
     }
 
@@ -674,12 +681,7 @@ class CardapioApp {
 
 // Função para tornar as categorias arrastáveis com mouse/dedo
 function initDragScroll() {
-    const containers = [
-        'categories-container', 
-        'categories-container2',
-        'categories-container-mobile',
-        'categories-container2-mobile'
-    ];
+    const containers = ['categories-container', 'categories-container2'];
     
     containers.forEach(id => {
         const container = document.getElementById(id);

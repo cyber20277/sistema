@@ -278,11 +278,7 @@ body {
     background: rgba(244, 67, 54, 0.1);
 }
 
-/* ===== BARRA DE CATEGORIAS (DESKTOP) ===== */
-.desktop-categories {
-    display: block;
-}
-
+/* ===== BARRA DE CATEGORIAS ===== */
 .categories-nav {
     background: var(--surface-color);
     border-bottom: 1px solid var(--border-light);
@@ -470,20 +466,6 @@ body {
     border-color: #26a69a;
 }
 
-/* ===== FOOTER FIXO PARA CELULAR ===== */
-.mobile-footer {
-    display: none; /* Escondido por padrão (desktop) */
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--surface-color);
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 8px 0;
-    border-top: 1px solid var(--border-light);
-}
-
 /* ===== CONTEÚDO PRINCIPAL ===== */
 .main-container {
     padding: var(--space-lg);
@@ -492,6 +474,7 @@ body {
     min-height: 100vh;
     padding-top: 300px;
 }
+
 
 /* ===== PRODUTOS ===== */
 .section-header {
@@ -792,29 +775,13 @@ body {
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
-    /* Esconde categorias do desktop no celular */
-    .desktop-categories {
-        display: none;
-    }
-    
-    /* Mostra footer com categorias no celular */
-    .mobile-footer {
-        display: block;
-    }
-    
-    /* Ajusta padding-bottom do main para não ficar atrás do footer */
-    .main-container {
-        padding-bottom: 100px;
-        padding-top: 260px;
-    }
-    
     .logo-container {
         width: 80px;
         height: 80px;
     }
       
     .status-badge {
-        padding:4px 3px;
+    padding:4px 3px;
     }
     
     .company-name {
@@ -823,6 +790,10 @@ body {
     
     .search-container {
         top: 90px;
+    }
+    
+    .main-container {
+     padding-top: 260px;
     }
     
     .products-grid {
