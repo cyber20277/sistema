@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+    <link rel="stylesheet" href="cardapio.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Container fixo no topo -->
+    <div class="fixed-top-container">
+        <!-- Header Principal -->
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <div class="logo-container">
+                        <img src="" alt="Logo" id="company-logo" class="company-logo">
+                        <div class="logo-placeholder" id="logo-placeholder">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                    </div>
+                    <div class="company-info">
+                        <h1 class="company-name" id="company-name">Gourmet Delícia</h1>
+                        <div class="company-status">
+                            <span class="status-badge">
+                                <i class="fas fa-circle" style="color: #4CAF50;"></i>
+                                <span>Aberto agora</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Botão do Carrinho -->
+                <div class="header-actions">
+                    <a href="carrinho.html" class="cart-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Barra de Busca -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Buscar no cardápio...">
+                <button class="search-clear" id="search-clear">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Barra de Categorias (aparece apenas no desktop) -->
+        <nav class="categories-nav desktop-categories">
+            <div class="categories-container" id="categories-container">
+                <!-- Categorias serão carregadas via JavaScript -->
+            </div>
+            <div class="categories-container2" id="categories-container2">
+                <!-- Tamanhos serão carregados via JavaScript -->
+            </div>
+        </nav>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-container">
+        <!-- Seção de Produtos -->
+        <section class="products-section">
+            <div class="products-grid" id="products-grid">
+                <!-- Produtos serão carregados via JavaScript -->
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Carregando cardápio...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER FIXO PARA CELULAR (categories-container movido para cá) -->
+    <footer class="mobile-footer">
+        <nav class="categories-nav">
+            <div class="categories-container" id="categories-container-mobile">
+                <!-- Categorias serão carregadas via JavaScript -->
+            </div>
+            <div class="categories-container2" id="categories-container2-mobile">
+                <!-- Tamanhos serão carregados via JavaScript -->
+            </div>
+        </nav>
+    </footer>
+
+    <!-- Overlay para painéis -->
+    <div class="panel-overlay" id="panel-overlay"></div>
+
+    <!-- Notificações -->
+    <div class="notifications-container" id="notifications-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="cardapio.js"></script>
+</body>
+</html>

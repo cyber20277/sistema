@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações da Conta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>Início</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="cadprodutos.html">
+                            <i class="fas fa-box"></i>
+                            <span>Cadastrar Produtos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="cardapio.html">
+                            <i class="fas fa-book-open"></i>
+                            <span>Cardápio Online</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="vendas-dia.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Vendas do Dia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="active">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="dashboard.html" class="btn-voltar-simples">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>Configurações</h1>
+                    <p>Gerencie suas preferências e informações</p>
+                </div>
+                <div class="header-right">
+                    <div class="date-time">
+                        <span id="currentDate"></span>
+                        <span id="currentTime"></span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="settings-container">
+                    <div class="settings-header">
+                        <div>
+                            <h1>Central</h1>
+                            <p>Atualize qualquer informações, preferências e configurações </p>
+                        </div>
+                        <button class="btn btn-primary" id="saveAllBtn">
+                            <i class="fas fa-save"></i> Salvar Alterações
+                        </button>
+                    </div>
+
+                    <div class="settings-grid">
+                        <!-- GERENCIAMENTO DE CATEGORIAS -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="fas fa-layer-group"></i>
+                                <h3>CRIAR CATEGORIAS</h3>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="novaCategoria">Nome da Nova Categoria</label>
+                                <div class="input-with-button">
+                                    <input type="text" id="novaCategoria" class="form-control" placeholder="Ex: Lanches, Bebidas, Sobremesas">
+                                    <button class="btn btn-accent" id="btnAdicionarCategoria">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="form-hint">Digite o nome da categoria e clique em adicionar</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Categorias Cadastradas</label>
+                                <div class="categorias-list" id="categoriasList">
+                                    <!-- Categorias serão carregadas aqui dinamicamente -->
+                                </div>
+                                <p class="form-hint">Total de <span id="totalCategorias">0</span> categorias cadastradas</p>
+                            </div>
+                            
+                            <!-- Modal para Edição -->
+                            <div class="modal-overlay" id="modalEdicaoCategoria">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3>Editar Categoria</h3>
+                                        <button class="btn-close-modal" id="btnFecharModalCategoria">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="categoriaEditNome">Nome da Categoria</label>
+                                            <input type="text" id="categoriaEditNome" class="form-control">
+                                            <input type="hidden" id="categoriaEditId">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="categoriaEditIcone">Ícone (opcional)</label>
+                                            <select id="categoriaEditIcone" class="form-control">
+                                                <option value="🍕">🍕 Comida</option>
+                                                <option value="🥤">🥤 Bebida</option>
+                                                <option value="🍰">🍰 Sobremesa</option>
+                                                <option value="🍔">🍔 Lanche</option>
+                                                <option value="🥗">🥗 Salada</option>
+                                                <option value="🍦">🍦 Sorvete</option>
+                                                <option value="☕">☕ Café</option>
+                                                <option value="📦">📦 Outro</option>
+                                            </select>
+                                            <p class="form-hint">O ícone será exibido junto ao nome da categoria</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" id="btnCancelarEdicaoCategoria">
+                                            Cancelar
+                                        </button>
+                                        <button class="btn btn-primary" id="btnSalvarEdicaoCategoria">
+                                            Salvar Alterações
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-actions">
+                                <button class="btn btn-primary" id="btnAtualizarCategorias">
+                                    <i class="fas fa-sync-alt"></i> Atualizar 
+                                </button>
+                                <button class="btn btn-secondary" id="btnRestaurarPadroesCategorias">
+                                    <i class="fas fa-undo"></i> Padrão
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- GERENCIAMENTO DE PESOS/TAMANHOS (SIMPLIFICADO SEM UNIDADE) -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="fas fa-weight"></i>
+                                <h3>CRIAR PESO OU TAMANHOS</h3>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="novoPesoNome">Nome do Peso/Tamanho</label>
+                                <div class="input-with-button">
+                                    <input type="text" id="novoPesoNome" class="form-control" placeholder="Ex: Pequeno, Médio, Grande, 300g, 500ml">
+                                    <button class="btn btn-accent" id="btnAdicionarPeso">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="form-hint">Digite o peso/tamanho e clique em adicionar</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Pesos/Tamanhos Cadastrados</label>
+                                <div class="pesos-list" id="pesosList">
+                                    <!-- Pesos serão carregados aqui dinamicamente -->
+                                </div>
+                                <p class="form-hint">Total de <span id="totalPesos">0</span> pesos/tamanhos cadastrados</p>
+                            </div>
+                            
+                            <!-- Modal para Edição de Peso (SIMPLIFICADO) -->
+                            <div class="modal-overlay" id="modalEdicaoPeso">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3>Editar Peso/Tamanho</h3>
+                                        <button class="btn-close-modal" id="btnFecharModalPeso">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="pesoEditNome">Nome do Peso/Tamanho</label>
+                                            <input type="text" id="pesoEditNome" class="form-control">
+                                            <input type="hidden" id="pesoEditId">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" id="btnCancelarEdicaoPeso">
+                                            Cancelar
+                                        </button>
+                                        <button class="btn btn-primary" id="btnSalvarEdicaoPeso">
+                                            Salvar Alterações
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-actions">
+                                <button class="btn btn-primary" id="btnAtualizarPesos">
+                                    <i class="fas fa-sync-alt"></i> Atualizar
+                                </button>
+                                <button class="btn btn-secondary" id="btnRestaurarPadroesPesos">
+                                    <i class="fas fa-undo"></i> Padrão
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- CONFIGURAÇÃO DE SABORES SIMPLIFICADA -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="fas fa-pizza-slice"></i>
+                                <h3>CRIAR QUANTIDADE DE SABORES</h3>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="maxSabores">Quantidade de Sabores</label>
+                                <div class="input-with-button">
+                                    <input type="number" id="maxSabores" class="form-control" min="1" max="10" value="2">
+                                    <button class="btn btn-accent" id="btnSalvarSabores">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <p class="form-hint">Defina a quantidade de sabores permitidos</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Configuração Atual</label>
+                                <div class="config-atual">
+                                    <div class="config-info">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Máximo de sabores: <strong id="configAtualSabores">2</strong></span>
+                                    </div>
+                                    <div class="config-info">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Última atualização: <span id="configAtualData">--</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-actions">
+                                <button class="btn btn-primary" id="btnAtualizarSabores">
+                                    <i class="fas fa-sync-alt"></i> Atualizar
+                                </button>
+                                <button class="btn btn-secondary" id="btnRestaurarSabores">
+                                    <i class="fas fa-undo"></i> Padrão
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+</html>

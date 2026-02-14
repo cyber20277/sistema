@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho</title>
+    <link rel="stylesheet" href="carrinho.css"> <!-- CSS SEPARADO -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header do Carrinho -->
+    <header class="cart-header">
+        <div class="header-container">
+            <a href="cardapio.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
+            </a>
+            <div class="cart-title">
+                <h1><i class="fas fa-shopping-bag"></i> Meu Carrinho</h1>
+            </div>
+            <div class="header-actions">
+                <span class="total-itens" id="total-itens">0 itens</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal do Carrinho -->
+    <main class="cart-container">
+        <!-- Carrinho Vazio -->
+        <div class="empty-cart" id="empty-cart">
+            <i class="fas fa-shopping-bag"></i>
+            <p>CARRINHO VAZIO</p>
+            <a href="cardapio.html" class="btn btn-primary">
+                 VOLTAR AO CARDÁPIO
+            </a>
+        </div>
+
+        <!-- Itens do Carrinho -->
+        <div class="cart-items-container" id="cart-items-container" style="display: none;">
+            <div class="cart-items" id="cart-items">
+                <!-- Itens serão carregados aqui -->
+            </div>
+
+            <!-- Resumo do Pedido -->
+            <div class="order-summary">
+                <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span>Taxa de entrega</span>
+                    <span id="delivery-fee">R$ 5,00</span>
+                </div>
+                
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="total-price">R$ 5,00</span>
+                </div>
+
+                <!-- Ações -->
+                <div class="cart-actions">
+                    <button class="btn btn-clear" id="clear-cart-btn">
+                        <i class="fas fa-trash-alt"></i> Limpar Carrinho
+                    </button>
+                    <button class="btn btn-confirm" id="checkout-btn">
+                        <i class="fas fa-check-circle"></i> Finalizar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notificações -->
+    <div class="notifications-container" id="notifications-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="carrinho.js"></script>
+</body>
+</html>

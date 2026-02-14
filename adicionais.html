@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizar Produto</title>
+    <link rel="stylesheet" href="cardapio.css">
+    <link rel="stylesheet" href="adicionais.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="personalize-page">
+        <!-- Cabeçalho da Página -->
+        <header class="page-header">
+            <div class="header-content">
+                <button class="back-btn" id="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Voltar</span>
+                </button>
+                <h1 class="page-title">Personalizar Produto</h1>
+            </div>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <!-- Informações do Produto -->
+            <section class="product-section" id="product-section">
+                <div class="section-loading">
+                    <div class="spinner"></div>
+                    <p>Carregando produto...</p>
+                </div>
+            </section>
+
+            <!-- Seção de Adicionais -->
+            <section class="extras-section" id="extras-section">
+                <div class="section-header">
+                    <div class="extras-counter" id="extras-counter">
+                        <span id="selected-count">0</span> de <span id="total-extras">0</span> selecionados
+                    </div>
+                </div>
+                
+                <div class="extras-container" id="extras-container">
+                    <div class="loading-extras">
+                        <div class="spinner small"></div>
+                        <p>Carregando adicionais...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Observações -->
+            <section class="notes-section" id="notes-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-edit"></i> Observações Especiais</h2>
+                </div>
+                
+                <div class="notes-container">
+                    <textarea 
+                        id="product-notes" 
+                        placeholder="Ex: sem cebola, ingredientes separados, etc." 
+                        rows="4"
+                        maxlength="250"
+                    ></textarea>
+                    <div class="notes-footer">
+                        <div class="notes-counter">
+                            <span id="notes-count">0</span>/250 caracteres
+                        </div>
+                        <button class="clear-notes" id="clear-notes">
+                            <i class="fas fa-times"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resumo do Pedido -->
+            <section class="order-summary" id="order-summary">
+                <div class="summary-header">
+                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                </div>
+                
+                <div class="summary-content">
+                    <div class="summary-item">
+                        <span class="label">Produto:</span>
+                        <span class="value" id="summary-product-name">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Preço do produto:</span>
+                        <span class="value" id="summary-product-price">R$ 0,00</span>
+                    </div>
+                    <div class="summary-item extras-list" id="summary-extras-list">
+                        <!-- Lista de adicionais será adicionada aqui -->
+                    </div>
+                    <div class="summary-item extras-total">
+                        <span class="label">Total adicionais:</span>
+                        <span class="value" id="summary-extras-price">R$ 0,00</span>
+                    </div>
+                   
+                    <div class="summary-item total">
+                        <span class="label">Total do item:</span>
+                        <span class="value" id="summary-total-price">R$ 0,00</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Botão Flutuante -->
+        <div class="floating-action" id="floating-action">
+            <div class="action-info">
+                <div class="total-price">
+                    <span class="label">Total:</span>
+                    <span class="price" id="total-price">R$ 0,00</span>
+                </div>
+            </div>
+            <button class="btn-add-to-cart" id="add-to-cart-btn">
+                <i class="fas fa-cart-plus"></i>
+                <span>Adicionar ao Carrinho</span>
+                <span class="item-quantity">1</span>
+            </button>
+        </div>
+
+        <!-- Notificações -->
+        <div class="notifications-container" id="notifications-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="adicionais.js"></script>
+</body>
+</html>
